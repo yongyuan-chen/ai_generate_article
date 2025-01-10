@@ -38,6 +38,8 @@ https://api-docs.deepseek.com/zh-cn/quick_start/pricing
 写提示词到input_prompt.json中
 
 ![提示词撰写](./提示词撰写.png)
+![google_scholar](./google_scholar.png)
+![main文件填写姓名语言.png](./main文件填写姓名语言.png)
 
 执行python main.py，(deepseek有点弱，有时候报错，多执行两次就有结果了)
 

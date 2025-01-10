@@ -64,10 +64,11 @@ def call_llm_json(messages, model='deepseek-chat'):
             )
             
             # 保存响应为 JSON 文件
-            save_to_json(response.choices[0].message.content, f'response_{messages[0]["content"][:10]}.json')
+            # save_to_json(response.choices[0].message.content, f'response_{messages[0]["content"][:10]}.json')
 
+            result=json.loads(response.choices[0].message.content)
             # 解析 JSON 响应
-            return json.loads(response.choices[0].message.content)
+            return result
 
         except json.JSONDecodeError as e:
             retry_count += 1
@@ -118,13 +119,13 @@ def concurrent_traversal(data, process_item, max_workers=100):
         future_to_index = {executor.submit(process_item, item): idx for idx, item in enumerate(data)}
         for future in concurrent.futures.as_completed(future_to_index):
             idx = future_to_index[future]
-            try:
-                result = future.result()
-                results[idx] = result  # 将结果放置在正确的位置
-            except Exception as e:
-                print(f"Error processing item at index {idx}: {e}")
-                # 也可以决定是否存储默认值或者 `None`，具体根据需求调整
-                results[idx] = None
+            # try:
+            result = future.result()
+            results[idx] = result  # 将结果放置在正确的位置
+            # except Exception as e:
+            #     print(f"Error processing item at index {idx}: {e},某些请求出错，重试几次python main.py即可")
+            #     # 也可以决定是否存储默认值或者 `None`，具体根据需求调整
+            #     results[idx] = None
     return results
 
 

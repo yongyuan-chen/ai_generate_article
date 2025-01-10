@@ -1,27 +1,7 @@
-import pdb
-import sys
 
-def custom_excepthook(type, value, traceback):
-    # 在报错时自动进入调试模式
-    print("报错了,进入调试模式...")
-    pdb.post_mortem(traceback)
-sys.excepthook = custom_excepthook
-
-#pdb调试命令
-# n：单步执行，跳过函数调用。
-# s：单步执行，进入函数内部。
-# c：继续运行程序，直到下一个断点或程序结束。
-# l：显示当前代码上下文。
-# w：显示堆栈跟踪，查看函数调用路径。
-# up：向上移动到调用栈的上一层。
-# down：向下移动到调用栈的下一层。
-# frame 3  使用 frame（或 f）命令可以直接切换到目标帧。  （从上到下编号从 0 开始）。
-
-
-
-input_prompt = '' #必填
+input_prompt = '' #必填 在input_prompt.json编辑
 name='张三'  #默认
-language='中文' #默认
+language='英语' #默认
 #这是输入
 
 import cyy_util
@@ -137,7 +117,16 @@ paper+=r'''
 
 concurrent_data=[]
 def concurrent_gen(messages):
-    return cyy_util.call_llm_json(messages=messages)['result']
+    for i in range(4):
+        if i >0:
+            print(f'第{i}次重试')
+        result=cyy_util.call_llm_json(messages=messages)
+        try:
+            if 'result' in result:
+                return result['result']
+        except Exception as e:
+            continue
+
 
 
 abstract_promtp=f'''
@@ -177,8 +166,14 @@ for content in cc_result:
 paper+=r'''
 \end{document}
 '''
+import time
+#获取时间戳，新建目录 时间戳-name-language
+import os
+save_path=f'{time.time()}_{name}_{language}'
+os.makedirs(save_path,exist_ok=True)
 
-with open('main.tex','w',encoding='utf-8') as file:
+with open(os.path.join(save_path,'main.tex'),'w',encoding='utf-8') as file:
     file.write(paper)
 # import pdb
 # pdb.set_trace()
+print(f"main.tex以保存至{os.path.join(save_path,'main.tex')}")
