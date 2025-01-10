@@ -1,0 +1,340 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{hyperref}
+\usepackage{ctex}
+\title{基于多模态大模型的机器人操控与感知：研究进展与展望}
+
+\author{陈永园}
+
+% \date{May 1, 2015}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+多模态大模型在自然语言处理和计算机视觉领域取得了显著的进展，其强大的推理能力为机器人感知与操控任务的优化提供了新的可能性。本文系统性综述了当前基于多模态大模型的机器人操控与感知研究，包括嵌入多模态感知的语言模型、视觉问答驱动的操控知识注入、三维世界中的通用智能体、以及基于模仿学习和生成式数据增强的机器人训练方法。此外，文章探讨了如何通过便携式数据采集和动态交互提升机器人对复杂任务的适应能力，并分析了无限生成数据方法对未来机器人学习的潜在影响。最后，总结了当前研究的技术挑战，包括任务多样性、真实场景适应性及人机协作设计，并展望了多模态大模型在机器人领域的未来发展方向。
+\end{abstract}
+
+\section{研究背景}
+
+随着人工智能技术的快速发展，多模态大模型（Multimodal Large Language Models, MLLMs）在语言理解与生成、计算机视觉以及跨模态推理任务中展现了卓越的性能。这些模型通过大规模数据训练，具备强大的通用推理能力，为机器人在感知、决策与操控中的智能化应用奠定了基础。
+
+\subsection{多模态大模型的崛起}
+近年来，大语言模型（Large Language Models, LLMs）如GPT系列、PaLM等，在自然语言处理领域引领了研究浪潮。这些模型的强大能力已扩展到多模态领域，通过融合视觉、语言等模态，形成了具备跨模态推理能力的多模态大模型。例如，PaLM-E通过结合视觉、文本及连续状态估计，实现了对多模态输入的统一编码，在多任务场景中表现出了显著的正迁移能力。
+
+\subsection{机器人感知与操控的关键挑战}
+尽管多模态大模型在广泛领域表现优异，但其在机器人感知与操控任务中的应用仍面临诸多挑战：
+\begin{itemize}
+    \item \textbf{物理世界的感知与推理：} 机器人需要从视觉、触觉等多种传感器数据中准确感知环境，并基于物理规则进行推理。
+    \item \textbf{复杂任务的分解与规划：} 机器人在执行任务时，需具备长时间、多步骤的任务规划能力。
+    \item \textbf{真实场景的适应性：} 现有多模态模型通常依赖于离线训练数据，在应对动态环境与多样化任务时表现有限。
+\end{itemize}
+
+\subsection{研究综述的目的与意义}
+本文旨在综述当前基于多模态大模型的机器人感知与操控研究进展，重点关注以下方面：
+\begin{enumerate}
+    \item 嵌入多模态感知的大模型在机器人任务中的应用。
+    \item 基于模仿学习和生成式数据增强的方法提升机器人任务适应性。
+    \item 三维世界中机器人任务执行的通用性探索。
+\end{enumerate}
+通过对比分析最新研究成果，本文期望为未来的研究提供系统性的指导，并展望多模态大模型在机器人领域的潜在方向。
+
+
+\section{多模态语言模型在机器人领域的最新进展}
+
+近年来，多模态语言模型（Multimodal Language Models, MLLMs）通过融合语言、视觉和其他传感器数据，为机器人感知与操控任务提供了新的解决思路。本章将重点介绍几项代表性工作，包括嵌入多模态感知的通用语言模型、基于视觉问答的操控知识注入，以及针对物体中心操控任务的优化模型。
+
+\subsection{Palm-E：嵌入多模态感知的通用语言模型}
+Palm-E是一种将视觉、连续状态估计和文本输入编码相结合的嵌入式多模态语言模型。其核心创新包括：
+\begin{itemize}
+    \item \textbf{多模态输入融合：} 将视觉信息和语言信息通过统一编码嵌入模型，以实现跨模态推理。
+    \item \textbf{正迁移能力：} 在训练中同时考虑机器人任务和通用视觉-语言任务，模型在多个领域表现出了显著的性能提升。
+    \item \textbf{多任务处理：} 通过单一模型同时完成机器人操作规划、视觉问答、图像描述等任务。
+\end{itemize}
+实验结果表明，Palm-E在OK-VQA数据集上达到了最新的性能，同时保持了通用语言推理能力，为机器人感知与决策任务提供了强有力的支持。
+
+\subsection{ManipVQA：基于视觉问答的操控知识注入}
+ManipVQA通过视觉问答（Visual Question Answering, VQA）的形式，将机器人操作所需的操控性知识注入多模态语言模型。其关键特点包括：
+\begin{itemize}
+    \item \textbf{操控性数据集构建：} 创建了涵盖工具检测、可操作性预测和物理概念理解的多样化图像数据集。
+    \item \textbf{统一问答格式：} 将操控性知识融入VQA框架，提升模型在操控任务中的推理能力。
+    \item \textbf{迁移学习策略：} 在保留原有视觉推理能力的基础上，通过微调实现操控知识的整合。
+\end{itemize}
+实验结果显示，ManipVQA在机器人模拟器和标准视觉任务基准上的表现优于传统方法，为机器人操作任务提供了更深入的知识支撑。
+
+\subsection{ManipLLM：面向物体中心的操控任务优化}
+ManipLLM针对机器人操控中的关键问题——接触点预测与末端执行器方向规划，提出了一种基于多模态语言模型的优化方法。其创新点包括：
+\begin{itemize}
+    \item \textbf{注入操控先验：} 通过适配器微调（Adapter Fine-tuning）保留模型的通用推理能力，同时注入操控知识。
+    \item \textbf{闭环控制策略：} 引入主动阻抗适应（Active Impedance Adaptation）政策，在实际操作中实现动态调整。
+    \item \textbf{测试时自适应：} 在推理过程中通过实时适配策略提高模型对场景的适应能力。
+\end{itemize}
+在模拟与真实环境中的实验验证表明，ManipLLM在任务稳定性和通用性方面取得了显著的提升。
+
+\subsection{小结}
+本章总结了多模态语言模型在机器人领域的最新进展，从跨模态感知、操控知识注入到任务优化，展示了其在提升机器人感知、推理与执行能力方面的巨大潜力。这些研究为机器人在复杂任务中的广泛应用奠定了基础，同时也为未来的技术发展指明了方向。
+
+
+\section{视觉-语言计划与三维感知的结合}
+
+在机器人任务中，长时间的任务规划和三维空间感知是实现复杂操作的核心能力。传统的语言模型虽然在推理和规划中表现优异，但缺乏与物理世界的直接联系。本章将探讨视觉-语言模型（Vision-Language Models, VLMs）与三维感知结合的最新研究成果，包括视觉-语言任务规划框架ViLa和三维世界中的通用智能体LEO。
+
+\subsection{GPT-4V与视觉-语言任务规划的优势}
+GPT-4V在整合视觉信息和语言推理方面展现了卓越的能力，ViLa框架正是以此为基础设计的一种新型长时规划系统。其主要特点包括：
+\begin{itemize}
+    \item \textbf{多模态目标定义：} 支持基于文本和视觉的灵活目标设定，使得机器人能够轻松理解多样化任务需求。
+    \item \textbf{视觉反馈融合：} 在任务执行过程中，动态融合视觉反馈以调整操作策略。
+    \item \textbf{空间布局与对象属性推理：} 深入理解视觉场景中的空间关系和对象特性，生成更为精准的任务规划。
+\end{itemize}
+实验结果表明，ViLa在多种真实和模拟环境中的任务执行成功率显著高于现有基线模型，尤其是在复杂场景中的表现尤为突出。
+
+\subsection{LEO：三维世界中的通用智能体}
+LEO是一种设计用于三维世界任务的通用多模态智能体，旨在解决机器人感知与操控任务中的三维推理与交互难题。其主要创新包括：
+\begin{itemize}
+    \item \textbf{三维任务接口设计：} LEO通过统一的任务接口，实现了从感知到推理、再到执行的一体化流程。
+    \item \textbf{三维视觉-语言对齐：} 通过大量三维场景和任务数据的预训练，实现三维信息与语言的深度融合。
+    \item \textbf{三维感知与操作：} 针对三维对象进行语义理解、导航和操控，具备高度的适应性和通用性。
+\end{itemize}
+实验验证表明，LEO在三维描述生成、问题回答、导航和操控任务中均表现出了优越的性能。其扩展性和灵活性使其成为构建未来三维智能体的重要工具。
+
+\subsection{小结}
+视觉-语言计划和三维感知的结合为机器人任务提供了更广阔的应用前景。GPT-4V和LEO的成功表明，将视觉、语言与三维世界深度集成，不仅可以提升机器人在复杂任务中的表现，还为实现更通用的智能体提供了可能。本章所述方法为探索机器人在动态三维场景中的推理与操作能力提供了宝贵的经验。
+
+
+\section{模仿学习与生成式数据增强在机器人领域的应用}
+
+模仿学习作为一种通过人类演示训练机器人的方法，已被广泛应用于复杂任务的学习中。然而，收集大量高质量演示数据成本高昂，且覆盖的任务场景有限。为了解决这些问题，生成式数据增强方法应运而生。本章将介绍基于模仿学习的长时任务学习框架MimicPlay，以及生成式数据增强系统如Vid2Robot和MimicGen的最新进展。
+
+\subsection{MimicPlay：基于人类互动的长期模仿学习}
+MimicPlay通过人类自由操作环境的视频数据提取关键动作，构建层次化学习框架以指导机器人学习长时间复杂任务。其主要特点包括：
+\begin{itemize}
+    \item \textbf{人类互动数据的利用：} 利用人类自由互动的播放视频提取显著的物理交互信息，减少对人工标注的依赖。
+    \item \textbf{层次化学习框架：} 将长时任务分解为高层次的计划和低层次的运动控制，从而提升任务学习效率。
+    \item \textbf{鲁棒性和泛化能力：} 通过结合真实环境中的少量示范和视频数据，增强机器人对干扰的鲁棒性及对新场景的泛化能力。
+\end{itemize}
+实验表明，MimicPlay在14个长时任务中显著优于现有模仿学习方法，尤其在任务成功率和适应性方面表现突出。
+
+\subsection{Vid2Robot：视频驱动的机器人策略学习}
+Vid2Robot是一种以人类视频演示为指导的机器人策略学习框架，其核心创新在于通过跨注意力变换器将人类动作与机器人动作统一建模。主要特点包括：
+\begin{itemize}
+    \item \textbf{视频与机器人状态的联合建模：} 使用跨注意力机制对人类演示视频特征和机器人当前状态进行联合建模，生成与视频演示一致的机器人动作。
+    \item \textbf{对比损失优化：} 引入对比损失函数对视频特征和机器人动作特征进行对齐，从而提升策略学习的准确性。
+    \item \textbf{跨对象运动迁移：} 能够将视频中展示的动作迁移到机器人环境中的不同对象上，实现高效的动作复用。
+\end{itemize}
+实验显示，Vid2Robot在多任务场景中提升了20%以上的策略性能，验证了其在视频驱动机器人学习中的潜力。
+
+\subsection{MimicGen：生成式数据系统的可扩展性}
+MimicGen通过少量人类示范生成大量多样化的任务数据，从而降低了机器人训练对人工示范的依赖。其核心贡献包括：
+\begin{itemize}
+    \item \textbf{多场景任务数据生成：} 从200个人类示范生成超过50,000条多任务数据，覆盖广泛的场景配置、对象实例和机器人平台。
+    \item \textbf{长时任务优化：} 针对长时高精度任务（如组装和咖啡制作），生成广泛的初始状态分布，提升机器人任务成功率。
+    \item \textbf{生成数据的高效性：} 比较结果显示，基于MimicGen生成的数据与额外收集的人工数据具有相似的学习效果，但成本显著降低。
+\end{itemize}
+MimicGen为可扩展的机器人学习提供了一种高效经济的解决方案，使机器人能够在多任务场景中表现优异。
+
+\subsection{小结}
+模仿学习与生成式数据增强在提升机器人学习效率和适应性方面表现出强大的能力。从MimicPlay的人类互动数据到Vid2Robot的跨注意力建模，再到MimicGen的多任务数据生成，这些方法共同推动了机器人在复杂任务中的广泛应用。本章讨论的研究为未来更高效的机器人学习提供了宝贵经验。
+
+\section{基于真实数据采集与动态交互的机器人训练}
+
+机器人在真实环境中的高效任务执行依赖于精准的数据采集与动态交互的能力。为此，多个研究致力于开发便携式数据采集系统和动态交互方法，以提升机器人在复杂场景中的操控能力。本章将介绍几种代表性技术，包括DexCap、HIRO手以及UMI的创新框架。
+
+\subsection{DexCap：便携式动态捕捉系统}
+DexCap是一种便携式手部动作捕捉系统，结合SLAM和电磁场技术，实现了手腕和手指的精准追踪，同时结合环境的三维观察进行动态交互建模\cite{wang2024dexcap}。其主要特点包括：
+\begin{itemize}
+    \item \textbf{精确动作捕捉：} 提供高精度、抗遮挡的手部动作数据，有效解决传统捕捉系统的局限性。
+    \item \textbf{逆运动学学习：} 利用点云数据进行模仿学习，帮助机器人无缝复现人类动作。
+    \item \textbf{实时反馈与调整：} 系统允许在策略执行中进行人机交互，以便优化操控性能。
+\end{itemize}
+实验结果表明，DexCap在多项高难度的操作任务中均表现优异，证明其在推动机器人模仿人类精细操作方面的重要作用。
+
+\subsection{HIRO手：基于穿戴设备的机器人模仿学习}
+HIRO手（Hand-over-hand Imitation learning wearable RObotic Hand）是一种整合触觉反馈的穿戴式机器人手，通过捕捉人类的力学反馈信息，提升机器人对抓握和物体操作的精准性\cite{wei2024wearable}。主要创新点包括：
+\begin{itemize}
+    \item \textbf{触觉反馈集成：} 通过触觉感知捕捉人类操控中的力量和动作细节，提升模仿学习的准确性。
+    \item \textbf{灵活的抓取策略：} 开发了视觉行为克隆控制器和非学习控制器，适应不同任务需求。
+    \item \textbf{高精度操控：} 能够执行复杂的物体抓取和手内操作，表现出优越的动态适应能力。
+\end{itemize}
+HIRO手在多个实验场景中成功实现了精确抓握和物体操控，为穿戴式设备在机器人模仿学习中的应用提供了新方向。
+
+\subsection{UMI：通用操控接口}
+通用操控接口（Universal Manipulation Interface, UMI）是一种专为机器人设计的数据收集与策略学习框架，旨在通过便携式手持设备实现多任务数据采集和跨平台策略部署\cite{chi2024universal}。其特点包括：
+\begin{itemize}
+    \item \textbf{手持式采集设备：} 结合硬件设计和直观接口，支持动态双手操作演示的数据采集。
+    \item \textbf{相对轨迹动作表示：} 提供与硬件无关的策略学习接口，实现跨平台部署的零样本泛化。
+    \item \textbf{多任务通用性：} 能够适应长时任务、动态任务及高精度任务的学习需求。
+\end{itemize}
+UMI在真实环境中的测试表明，其能够将复杂的人类示范动作高效转移至机器人，并实现对新环境和新对象的快速适应。
+
+\subsection{小结}
+通过DexCap的高精度捕捉、HIRO手的触觉集成和UMI的多任务通用性，机器人在复杂任务中的表现得到了显著提升。这些技术的结合为机器人操控技术提供了更强的适应性和灵活性，为未来高效的机器人学习与操作奠定了基础\cite{wang2024dexcap, wei2024wearable, chi2024universal}。
+
+
+
+\section{无限生成数据的未来方向}
+
+大规模的数据需求是机器人学习的核心挑战之一，而生成式数据增强技术的出现为解决这一问题提供了新思路。通过生成多样化的任务场景和数据集，机器人学习能够以较低的成本实现更高的泛化能力。本章将重点讨论RoboGen和MimicGen两个系统在生成式数据增强中的应用。
+
+\subsection{RoboGen：通过生成式模拟扩展机器人技能学习}
+RoboGen是一种生成式机器人智能体，通过自动生成多样化的任务、场景和训练监督，推动机器人技能学习的发展\cite{wang2023robogen}。其核心特性包括：
+\begin{itemize}
+    \item \textbf{生成式任务与场景：} 基于自引导的任务生成机制，构建不同对象与空间配置的训练环境，支持多样化技能学习。
+    \item \textbf{任务分解与策略选择：} 将高层次任务分解为子任务，并动态选择强化学习、运动规划或轨迹优化等最佳学习策略。
+    \item \textbf{无限生成数据流：} 系统可持续生成与任务相关的技能演示和环境数据，降低对人工干预的依赖。
+\end{itemize}
+RoboGen在模拟环境中的实验验证了其生成数据的丰富性和训练效率，为机器人学习无限数据的可能性提供了实际支持。
+
+\subsection{MimicGen：基于少量示范的大规模数据生成}
+MimicGen通过少量人类示范数据扩展生成大规模、多样化的任务数据，显著降低了人工数据采集的成本\cite{mandlekar2023mimicgen}。其主要创新包括：
+\begin{itemize}
+    \item \textbf{任务数据合成：} 从少量演示生成超过50,000条覆盖18个任务的演示数据，涵盖多样化的初始状态和场景配置。
+    \item \textbf{复杂任务支持：} 尤其在长时任务（如装配和制作）中，生成的数据有效覆盖了多种执行路径，提升任务成功率。
+    \item \textbf{经济性与高效性：} 比较研究显示，MimicGen生成的数据能够替代额外采集的人工示范，提供相似的训练效果，同时大幅降低时间和成本。
+\end{itemize}
+MimicGen在实际任务中的表现表明，生成式数据系统能够为机器人学习提供强大的数据基础，并显著扩展其任务覆盖范围。
+
+\subsection{未来展望}
+基于生成式模拟的技术如RoboGen与MimicGen展示了在数据生成和技能学习中的潜力。然而，为进一步提升其实用性和效率，未来的研究需重点关注以下方面：
+\begin{itemize}
+    \item \textbf{场景生成的真实性：} 生成任务和场景需要更贴近真实世界，以提升学习成果的迁移能力。
+    \item \textbf{跨模态数据的整合：} 在生成任务中融合视觉、语言和触觉信息，支持更复杂的机器人任务。
+    \item \textbf{优化生成效率：} 研究高效的数据生成算法以进一步减少计算和存储成本。
+\end{itemize}
+
+\subsection{小结}
+生成式数据增强方法为机器人学习提供了无限的数据来源，从RoboGen的自引导生成机制到MimicGen的高效任务扩展，这些技术在提升机器人泛化能力和任务覆盖范围方面具有显著的作用\cite{wang2023robogen, mandlekar2023mimicgen}。生成式技术的持续发展将在未来进一步推动机器人智能的突破。
+
+\section{技术挑战与未来展望}
+
+尽管多模态大模型在机器人领域的应用取得了显著进展，但仍存在一系列技术挑战，这些问题制约了其在更复杂任务中的进一步发展。本章将讨论当前面临的主要挑战，并对未来的发展方向进行展望。
+
+\subsection{技术挑战}
+\subsubsection{数据与任务的多样性}
+多模态大模型的性能严重依赖于训练数据的规模和多样性。然而，在机器人领域，真实环境下的数据采集成本高昂，导致模型难以覆盖足够广泛的任务场景\cite{chi2024universal, mandlekar2023mimicgen}。
+\begin{itemize}
+    \item \textbf{真实环境的复杂性：} 多模态模型需要应对动态、多样化的物理环境，这对模型的感知与推理能力提出了更高要求。
+    \item \textbf{任务分布的偏差：} 现有数据集多集中于特定任务和场景，限制了模型的泛化能力。
+\end{itemize}
+
+\subsubsection{模型的计算效率与可扩展性}
+多模态大模型通常拥有庞大的参数规模，这导致高昂的计算需求和较长的推理时间，限制了其在资源受限设备上的应用\cite{huang2023embodied, wang2023robogen}。
+\begin{itemize}
+    \item \textbf{计算成本：} 在实时任务中，大模型可能难以满足实时性要求。
+    \item \textbf{可扩展性：} 对于新任务或新环境，模型的适配能力仍有待提升。
+\end{itemize}
+
+\subsubsection{与物理世界的对齐}
+尽管多模态模型在推理能力上表现出色，但其在操控任务中对物理世界的理解和交互能力仍显不足\cite{wei2024wearable, huang2024manipvqa}。
+\begin{itemize}
+    \item \textbf{物理规则的学习：} 模型难以直接从视觉和语言中学习复杂的物理规律。
+    \item \textbf{触觉和力学反馈的缺乏：} 当前模型缺少对触觉和力学信息的整合能力，限制了其对精细操作任务的适应性。
+\end{itemize}
+
+\subsection{未来展望}
+针对上述挑战，未来多模态大模型在机器人领域的发展可以沿以下几个方向展开：
+\subsubsection{数据高效学习与生成}
+通过结合少样本学习和生成式数据增强技术，未来可以进一步提升模型的数据利用效率\cite{wang2023mimicplay, mandlekar2023mimicgen}。
+\begin{itemize}
+    \item \textbf{生成式数据扩展：} 进一步优化生成式模拟技术，生成更贴近真实场景的数据。
+    \item \textbf{少样本学习：} 通过高效算法提升模型在小样本条件下的学习能力。
+\end{itemize}
+
+\subsubsection{实时性优化与边缘计算}
+针对大模型的计算效率问题，未来需发展更加高效的模型结构和计算方法\cite{huang2023embodied, hu2023look}。
+\begin{itemize}
+    \item \textbf{模型压缩与加速：} 研究模型剪枝、量化和知识蒸馏技术以降低计算成本。
+    \item \textbf{边缘计算：} 将多模态模型部署到边缘设备中，实现实时推理与决策。
+\end{itemize}
+
+\subsubsection{多模态信息的深度融合}
+未来的机器人模型需要进一步融合视觉、语言、触觉和力学信息，实现更自然的环境理解与交互能力\cite{wang2024dexcap, wei2024wearable}。
+\begin{itemize}
+    \item \textbf{触觉与视觉融合：} 研究多模态信息的协同建模以提升操作任务的精确性。
+    \item \textbf{环境理解与推理：} 开发新的架构以支持更复杂的环境语义理解和物理推理能力。
+\end{itemize}
+
+\subsection{小结}
+当前多模态大模型在机器人领域的研究仍处于起步阶段，面临数据多样性、计算效率与物理对齐等多重挑战。然而，随着生成式数据增强、实时计算优化及多模态融合技术的发展，未来的机器人有望在更广泛的任务中实现高效且智能的感知、推理与操控\cite{chi2024universal, wang2023robogen, wei2024wearable}。
+
+
+\section{结论}
+
+多模态大模型在机器人感知、推理与操控任务中展现出了广阔的应用前景。本文系统性综述了这一领域的最新研究成果，从嵌入多模态感知的语言模型，到基于模仿学习与生成式数据扩展的方法，再到视觉-语言计划和三维感知的结合。通过这些研究，机器人在复杂任务中的表现得到了显著提升。
+
+\subsection{研究总结}
+\begin{itemize}
+    \item **嵌入多模态感知的语言模型：** 如Palm-E通过整合视觉、语言和状态信息，在多任务场景中表现出了正迁移能力\cite{driess2023palm}。
+    \item **模仿学习与生成式数据扩展：** 方法如MimicPlay和MimicGen利用少量人类演示生成多样化数据，提升了任务覆盖范围和学习效率\cite{wang2023mimicplay, mandlekar2023mimicgen}。
+    \item **三维世界中的通用智能体：** 模型如LEO在三维感知和操作任务中展现了优异性能，标志着机器人能力向更通用方向发展\cite{huang2023embodied}。
+    \item **基于真实交互的数据采集与学习：** DexCap和HIRO手通过高精度的动态数据采集与触觉反馈，提升了机器人对复杂任务的适应性\cite{wang2024dexcap, wei2024wearable}。
+\end{itemize}
+
+\subsection{关键启示}
+通过对现有工作的总结，本文归纳出以下关键启示：
+\begin{itemize}
+    \item **多模态融合是关键：** 深度融合视觉、语言和触觉信息是提升机器人能力的核心方向。
+    \item **生成式技术潜力巨大：** 无论是数据生成还是任务场景扩展，生成式技术均能显著降低训练成本并提升模型的泛化能力。
+    \item **实时性与可扩展性：** 为满足实际应用需求，未来需重点关注模型的实时推理能力及其对多样化任务的适应性。
+\end{itemize}
+
+\subsection{未来研究展望}
+未来，机器人领域基于多模态大模型的研究可以沿以下方向进一步探索：
+\begin{itemize}
+    \item **自监督与强化学习：** 结合多模态感知与自监督学习，实现机器人在真实环境中的自主学习与优化\cite{wang2023robogen, hu2023look}。
+    \item **智能体与人类协作：** 发展具备语义理解和动态交互能力的智能体，与人类协同完成复杂任务。
+    \item **多模态生成式预训练：** 构建覆盖视觉、语言和触觉信息的大规模生成式模型，支持更复杂的任务推理与规划\cite{mandlekar2023mimicgen, huang2023embodied}。
+\end{itemize}
+
+\subsection{总结}
+多模态大模型为机器人感知与操控任务提供了全新的研究范式。通过更高效的数据利用、更深度的模态融合以及更广泛的任务覆盖，未来的机器人有望在真实世界中展现出接近人类水平的智能能力，为各行业的智能化发展提供重要支持\cite{driess2023palm, wang2023robogen, chi2024universal}。
+
+
+\begin{thebibliography}{99}
+
+\bibitem{driess2023palm}
+Driess, Danny, Xia, Fei, Sajjadi, Mehdi SM, Lynch, Corey, Chowdhery, Aakanksha, Ichter, Brian, Wahid, Ayzaan, Tompson, Jonathan, Vuong, Quan, Yu, Tianhe, et al. (2023). Palm-e: An embodied multimodal language model. \textit{arXiv preprint arXiv:2303.03378}.
+
+\bibitem{huang2024manipvqa}
+Huang, Siyuan, Ponomarenko, Iaroslav, Jiang, Zhengkai, Li, Xiaoqi, Hu, Xiaobin, Gao, Peng, Li, Hongsheng, Dong, Hao. (2024). Manipvqa: Injecting robotic affordance and physically grounded information into multi-modal large language models. \textit{arXiv preprint arXiv:2403.11289}.
+
+\bibitem{li2024manipllm}
+Li, Xiaoqi, Zhang, Mingxu, Geng, Yiran, Geng, Haoran, Long, Yuxing, Shen, Yan, Zhang, Renrui, Liu, Jiaming, Dong, Hao. (2024). Manipllm: Embodied multimodal large language model for object-centric robotic manipulation. \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 18061--18070.
+
+\bibitem{hu2023look}
+Hu, Yingdong, Lin, Fanqi, Zhang, Tong, Yi, Li, Gao, Yang. (2023). Look before you leap: Unveiling the power of gpt-4v in robotic vision-language planning. \textit{arXiv preprint arXiv:2311.17842}.
+
+\bibitem{huang2023embodied}
+Huang, Jiangyong, Yong, Silong, Ma, Xiaojian, Linghu, Xiongkun, Li, Puhao, Wang, Yan, Li, Qing, Zhu, Song-Chun, Jia, Baoxiong, Huang, Siyuan. (2023). An embodied generalist agent in 3d world. \textit{arXiv preprint arXiv:2311.12871}.
+
+\bibitem{wang2023mimicplay}
+Wang, Chen, Fan, Linxi, Sun, Jiankai, Zhang, Ruohan, Fei-Fei, Li, Xu, Danfei, Zhu, Yuke, Anandkumar, Anima. (2023). Mimicplay: Long-horizon imitation learning by watching human play. \textit{arXiv preprint arXiv:2302.12422}.
+
+\bibitem{jain2024vid2robot}
+Jain, Vidhi, Attarian, Maria, Joshi, Nikhil J., Wahid, Ayzaan, Driess, Danny, Vuong, Quan, Sanketi, Pannag R., Sermanet, Pierre, Welker, Stefan, Chan, Christine, et al. (2024). Vid2robot: End-to-end video-conditioned policy learning with cross-attention transformers. \textit{arXiv preprint arXiv:2403.12943}.
+
+\bibitem{chi2024universal}
+Chi, Cheng, Xu, Zhenjia, Pan, Chuer, Cousineau, Eric, Burchfiel, Benjamin, Feng, Siyuan, Tedrake, Russ, Song, Shuran. (2024). Universal manipulation interface: In-the-wild robot teaching without in-the-wild robots. \textit{arXiv preprint arXiv:2402.10329}.
+
+\bibitem{wang2024dexcap}
+Wang, Chen, Shi, Haochen, Wang, Weizhuo, Zhang, Ruohan, Fei-Fei, Li, Liu, C. Karen. (2024). Dexcap: Scalable and portable mocap data collection system for dexterous manipulation. \textit{arXiv preprint arXiv:2403.07788}.
+
+\bibitem{wei2024wearable}
+Wei, Dehao, Xu, Huazhe. (2024). A wearable robotic hand for hand-over-hand imitation learning. \textit{2024 IEEE International Conference on Robotics and Automation (ICRA)}, 18113--18119.
+
+\bibitem{wang2023robogen}
+Wang, Yufei, Xian, Zhou, Chen, Feng, Wang, Tsun-Hsuan, Wang, Yian, Fragkiadaki, Katerina, Erickson, Zackory, Held, David, Gan, Chuang. (2023). RoboGen: Towards unleashing infinite data for automated robot learning via generative simulation. \textit{arXiv preprint arXiv:2311.01455}.
+
+\bibitem{mandlekar2023mimicgen}
+Mandlekar, Ajay, Nasiriany, Soroush, Wen, Bowen, Akinola, Iretiayo, Narang, Yashraj, Fan, Linxi, Zhu, Yuke, Fox, Dieter. (2023). Mimicgen: A data generation system for scalable robot learning using human demonstrations. \textit{arXiv preprint arXiv:2310.17596}.
+
+\bibitem{zheng2020end}
+Zheng, Minghang, Gao, Peng, Zhang, Renrui, Li, Kunchang, Wang, Xiaogang, Li, Hongsheng, Dong, Hao. (2020). End-to-end object detection with adaptive clustering transformer. \textit{arXiv preprint arXiv:2011.09315}.
+
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,182 @@
+Driess D, Xia F, Sajjadi M S M, et al. Palm-e: An embodied multimodal language model[J]. arXiv preprint arXiv:2303.03378, 2023.
+
+Large language models excel at a wide range of complex tasks. However, enabling general inference in the real world, e.g., for robotics problems, raises the challenge of grounding. We propose embodied language models to directly incorporate real-world continuous sensor modalities into language models and thereby establish the link between words and percepts. Input to our embodied language model are multi-modal sentences that interleave visual, continuous state estimation, and textual input encodings. We train these encodings end-to-end, in conjunction with a pre-trained large language model, for multiple embodied tasks including sequential robotic manipulation planning, visual question answering, and captioning. Our evaluations show that PaLM-E, a single large embodied multimodal model, can address a variety of embodied reasoning tasks, from a variety of observation modalities, on multiple embodiments, and further, exhibits positive transfer: the model benefits from diverse joint training across internet-scale language, vision, and visual-language domains. Our largest model, PaLM-E-562B with 562B parameters, in addition to being trained on robotics tasks, is a visual-language generalist with state-of-the-art performance on OK-VQA, and retains generalist language capabilities with increasing scale.
+
+
+@article{driess2023palm,
+  title={Palm-e: An embodied multimodal language model},
+  author={Driess, Danny and Xia, Fei and Sajjadi, Mehdi SM and Lynch, Corey and Chowdhery, Aakanksha and Ichter, Brian and Wahid, Ayzaan and Tompson, Jonathan and Vuong, Quan and Yu, Tianhe and others},
+  journal={arXiv preprint arXiv:2303.03378},
+  year={2023}
+}
+
+----------------------------------------------------------------------
+
+Manipvqa: Injecting robotic affordance and physically grounded information into multi-modal large language models
+
+
+While the integration of Multi-modal Large Language Models (MLLMs) with robotic systems has significantly improved robots' ability to understand and execute natural language instructions, their performance in manipulation tasks remains limited due to a lack of robotics-specific knowledge. Conventional MLLMs are typically trained on generic image-text pairs, leaving them deficient in understanding affordances and physical concepts crucial for manipulation. To address this gap, we propose ManipVQA, a novel framework that infuses MLLMs with manipulation-centric knowledge through a Visual Question-Answering (VQA) format. This approach encompasses tool detection, affordance recognition, and a broader understanding of physical concepts. We curated a diverse dataset of images depicting interactive objects, to challenge robotic understanding in tool detection, affordance prediction, and physical concept comprehension. To effectively integrate this robotics-specific knowledge with the inherent vision-reasoning capabilities of MLLMs, we leverage a unified VQA format and devise a fine-tuning strategy. This strategy preserves the original vision-reasoning abilities while incorporating the newly acquired robotic insights. Empirical evaluations conducted in robotic simulators and across various vision task benchmarks demonstrate the robust performance of ManipVQA. The code and dataset are publicly available at this https URL.
+
+
+@article{huang2024manipvqa,
+  title={Manipvqa: Injecting robotic affordance and physically grounded information into multi-modal large language models},
+  author={Huang, Siyuan and Ponomarenko, Iaroslav and Jiang, Zhengkai and Li, Xiaoqi and Hu, Xiaobin and Gao, Peng and Li, Hongsheng and Dong, Hao},
+  journal={arXiv preprint arXiv:2403.11289},
+  year={2024}
+}
+
+----------------------------------------------------------------------
+ManipLLM: Embodied Multimodal Large Language Model for Object-Centric Robotic Manipulation
+
+
+Robot manipulation relies on accurately predicting contact points and end-effector directions to ensure successful operation. However learning-based robot manipulation trained on a limited category within a simulator often struggles to achieve generalizability especially when confronted with extensive categories. Therefore we introduce an innovative approach for robot manipulation that leverages the robust reasoning capabilities of Multimodal Large Language Models (MLLMs) to enhance the stability and generalization of manipulation. By fine-tuning the injected adapters we preserve the inherent common sense and reasoning ability of the MLLMs while equipping them with the ability for manipulation. The fundamental insight lies in the introduced fine-tuning paradigm encompassing object category understanding affordance prior reasoning and object-centric pose prediction to stimulate the reasoning ability of MLLM in manipulation. During inference our approach utilizes an RGB image and text prompt to predict the end effector's pose in chain of thoughts. After the initial contact is established an active impedance adaptation policy is introduced to plan the upcoming waypoints in a closed-loop manner. Moreover in real world we design a test-time adaptation (TTA) strategy for manipulation to enable the model better adapt to the current real-world scene configuration. Experiments in simulator and real-world show the promising performance of ManipLLM. More details and demonstrations can be found at https://sites.google.com/view/manipllm.
+
+
+@inproceedings{li2024manipllm,
+  title={Manipllm: Embodied multimodal large language model for object-centric robotic manipulation},
+  author={Li, Xiaoqi and Zhang, Mingxu and Geng, Yiran and Geng, Haoran and Long, Yuxing and Shen, Yan and Zhang, Renrui and Liu, Jiaming and Dong, Hao},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={18061--18070},
+  year={2024}
+}
+----------------------------------------------------------------------
+
+
+Look Before You Leap: Unveiling the Power of GPT-4V in Robotic Vision-Language Planning
+
+
+In this study, we are interested in imbuing robots with the capability of physically-grounded task planning. Recent advancements have shown that large language models (LLMs) possess extensive knowledge useful in robotic tasks, especially in reasoning and planning. However, LLMs are constrained by their lack of world grounding and dependence on external affordance models to perceive environmental information, which cannot jointly reason with LLMs. We argue that a task planner should be an inherently grounded, unified multimodal system. To this end, we introduce Robotic Vision-Language Planning (ViLa), a novel approach for long-horizon robotic planning that leverages vision-language models (VLMs) to generate a sequence of actionable steps. ViLa directly integrates perceptual data into its reasoning and planning process, enabling a profound understanding of commonsense knowledge in the visual world, including spatial layouts and object attributes. It also supports flexible multimodal goal specification and naturally incorporates visual feedback. Our extensive evaluation, conducted in both real-robot and simulated environments, demonstrates ViLa's superiority over existing LLM-based planners, highlighting its effectiveness in a wide array of open-world manipulation tasks.
+
+
+@article{hu2023look,
+  title={Look before you leap: Unveiling the power of gpt-4v in robotic vision-language planning},
+  author={Hu, Yingdong and Lin, Fanqi and Zhang, Tong and Yi, Li and Gao, Yang},
+  journal={arXiv preprint arXiv:2311.17842},
+  year={2023}
+}
+
+
+----------------------------------------------------------------------
+An Embodied Generalist Agent in 3D World
+
+
+Leveraging massive knowledge from large language models (LLMs), recent machine learning models show notable successes in general-purpose task solving in diverse domains such as computer vision and robotics. However, several significant challenges remain: (i) most of these models rely on 2D images yet exhibit a limited capacity for 3D input; (ii) these models rarely explore the tasks inherently defined in 3D world, e.g., 3D grounding, embodied reasoning and acting. We argue these limitations significantly hinder current models from performing real-world tasks and approaching general intelligence. To this end, we introduce LEO, an embodied multi-modal generalist agent that excels in perceiving, grounding, reasoning, planning, and acting in the 3D world. LEO is trained with a unified task interface, model architecture, and objective in two stages: (i) 3D vision-language (VL) alignment and (ii) 3D vision-language-action (VLA) instruction tuning. We collect large-scale datasets comprising diverse object-level and scene-level tasks, which require considerable understanding of and interaction with the 3D world. Moreover, we meticulously design an LLM-assisted pipeline to produce high-quality 3D VL data. Through extensive experiments, we demonstrate LEO's remarkable proficiency across a wide spectrum of tasks, including 3D captioning, question answering, embodied reasoning, navigation and manipulation. Our ablative studies and scaling analyses further provide valuable insights for developing future embodied generalist agents. Code and data are available on project page.   
+
+@article{huang2023embodied,
+  title={An embodied generalist agent in 3d world},
+  author={Huang, Jiangyong and Yong, Silong and Ma, Xiaojian and Linghu, Xiongkun and Li, Puhao and Wang, Yan and Li, Qing and Zhu, Song-Chun and Jia, Baoxiong and Huang, Siyuan},
+  journal={arXiv preprint arXiv:2311.12871},
+  year={2023}
+}
+
+
+----------------------------------------------------------------------
+
+MimicPlay: Long-Horizon Imitation Learning by Watching Human Play
+
+Imitation learning from human demonstrations is a promising paradigm for teaching robots manipulation skills in the real world. However, learning complex long-horizon tasks often requires an unattainable amount of demonstrations. To reduce the high data requirement, we resort to human play data - video sequences of people freely interacting with the environment using their hands. Even with different morphologies, we hypothesize that human play data contain rich and salient information about physical interactions that can readily facilitate robot policy learning. Motivated by this, we introduce a hierarchical learning framework named MimicPlay that learns latent plans from human play data to guide low-level visuomotor control trained on a small number of teleoperated demonstrations. With systematic evaluations of 14 long-horizon manipulation tasks in the real world, we show that MimicPlay outperforms state-of-the-art imitation learning methods in task success rate, generalization ability, and robustness to disturbances. Code and videos are available at this https URL
+
+
+
+@article{wang2023mimicplay,
+  title={Mimicplay: Long-horizon imitation learning by watching human play},
+  author={Wang, Chen and Fan, Linxi and Sun, Jiankai and Zhang, Ruohan and Fei-Fei, Li and Xu, Danfei and Zhu, Yuke and Anandkumar, Anima},
+  journal={arXiv preprint arXiv:2302.12422},
+  year={2023}
+}
+
+
+----------------------------------------------------------------------
+Vid2Robot: End-to-end Video-conditioned Policy Learning with Cross-Attention Transformers
+
+
+Large-scale multi-task robotic manipulation systems often rely on text to specify the task. In this work, we explore whether a robot can learn by observing humans. To do so, the robot must understand a person's intent and perform the inferred task despite differences in the embodiments and environments. We introduce Vid2Robot, an end-to-end video-conditioned policy that takes human videos demonstrating manipulation tasks as input and produces robot actions. Our model is trained with a large dataset of prompt video-robot trajectory pairs to learn unified representations of human and robot actions from videos. Vid2Robot uses cross-attention transformer layers between video features and the current robot state to produce the actions and perform the same task as shown in the video. We use auxiliary contrastive losses to align the prompt and robot video representations for better policies. We evaluate Vid2Robot on real-world robots and observe over 20% improvement over BC-Z when using human prompt videos. Further, we also show cross-object motion transfer ability that enables video-conditioned policies to transfer a motion observed on one object in the prompt video to another object in the robot's own environment. Videos available at this https URL
+
+@article{jain2024vid2robot,
+  title={Vid2robot: End-to-end video-conditioned policy learning with cross-attention transformers},
+  author={Jain, Vidhi and Attarian, Maria and Joshi, Nikhil J and Wahid, Ayzaan and Driess, Danny and Vuong, Quan and Sanketi, Pannag R and Sermanet, Pierre and Welker, Stefan and Chan, Christine and others},
+  journal={arXiv preprint arXiv:2403.12943},
+  year={2024}
+}
+
+----------------------------------------------------------------------
+
+Universal Manipulation Interface: In-The-Wild Robot Teaching Without In-The-Wild Robots
+
+We present Universal Manipulation Interface (UMI) -- a data collection and policy learning framework that allows direct skill transfer from in-the-wild human demonstrations to deployable robot policies. UMI employs hand-held grippers coupled with careful interface design to enable portable, low-cost, and information-rich data collection for challenging bimanual and dynamic manipulation demonstrations. To facilitate deployable policy learning, UMI incorporates a carefully designed policy interface with inference-time latency matching and a relative-trajectory action representation. The resulting learned policies are hardware-agnostic and deployable across multiple robot platforms. Equipped with these features, UMI framework unlocks new robot manipulation capabilities, allowing zero-shot generalizable dynamic, bimanual, precise, and long-horizon behaviors, by only changing the training data for each task. We demonstrate UMI's versatility and efficacy with comprehensive real-world experiments, where policies learned via UMI zero-shot generalize to novel environments and objects when trained on diverse human demonstrations. UMI's hardware and software system is open-sourced at this https URL.
+
+@article{chi2024universal,
+  title={Universal manipulation interface: In-the-wild robot teaching without in-the-wild robots},
+  author={Chi, Cheng and Xu, Zhenjia and Pan, Chuer and Cousineau, Eric and Burchfiel, Benjamin and Feng, Siyuan and Tedrake, Russ and Song, Shuran},
+  journal={arXiv preprint arXiv:2402.10329},
+  year={2024}
+}
+
+----------------------------------------------------------------------
+
+
+DexCap: Scalable and Portable Mocap Data Collection System for Dexterous Manipulation
+
+
+Imitation learning from human hand motion data presents a promising avenue for imbuing robots with human-like dexterity in real-world manipulation tasks. Despite this potential, substantial challenges persist, particularly with the portability of existing hand motion capture (mocap) systems and the complexity of translating mocap data into effective robotic policies. To tackle these issues, we introduce DexCap, a portable hand motion capture system, alongside DexIL, a novel imitation algorithm for training dexterous robot skills directly from human hand mocap data. DexCap offers precise, occlusion-resistant tracking of wrist and finger motions based on SLAM and electromagnetic field together with 3D observations of the environment. Utilizing this rich dataset, DexIL employs inverse kinematics and point cloud-based imitation learning to seamlessly replicate human actions with robot hands. Beyond direct learning from human motion, DexCap also offers an optional human-in-the-loop correction mechanism during policy rollouts to refine and further improve task performance. Through extensive evaluation across six challenging dexterous manipulation tasks, our approach not only demonstrates superior performance but also showcases the system's capability to effectively learn from in-the-wild mocap data, paving the way for future data collection methods in the pursuit of human-level robot dexterity. More details can be found at this https URL
+
+
+@article{wang2024dexcap,
+  title={Dexcap: Scalable and portable mocap data collection system for dexterous manipulation},
+  author={Wang, Chen and Shi, Haochen and Wang, Weizhuo and Zhang, Ruohan and Fei-Fei, Li and Liu, C Karen},
+  journal={arXiv preprint arXiv:2403.07788},
+  year={2024}
+}
+
+
+----------------------------------------------------------------------
+A Wearable Robotic Hand for Hand-over-Hand Imitation Learning
+
+Dexterous manipulation through imitation learning has gained significant attention in robotics research. The collection of high-quality expert data holds paramount importance when using imitation learning. The existing approaches for acquiring expert data commonly involve utilizing a data glove to capture hand motion information. However, this method suffers from limitations as the collected information cannot be directly mapped to the robotic hand due to discrepancies in their degrees of freedom or structures. Furthermore, it fails to accurately capture force feedback information between the hand and objects during the demonstration process. To overcome these challenges, this paper presents a novel solution in the form of a wearable dexterous hand, namely Handover-hand Imitation learning wearable RObotic Hand (HIRO Hand), which integrates expert data collection and enables the implementation of dexterous operations. This HIRO Hand empowers the operator to utilize their own tactile feedback to determine appropriate force, position, and actions, resulting in more accurate imitation of the expert’s actions. We develop both non-learning and visual behavior cloning based controllers allowing HIRO Hand successfully achieves grasping and in-hand manipulation ability.
+
+@inproceedings{wei2024wearable,
+  title={A wearable robotic hand for hand-over-hand imitation learning},
+  author={Wei, Dehao and Xu, Huazhe},
+  booktitle={2024 IEEE International Conference on Robotics and Automation (ICRA)},
+  pages={18113--18119},
+  year={2024},
+  organization={IEEE}
+}
+----------------------------------------------------------------------
+RoboGen: Towards Unleashing Infinite Data for Automated Robot Learning via Generative Simulation
+
+We present RoboGen, a generative robotic agent that automatically learns diverse robotic skills at scale via generative simulation. RoboGen leverages the latest advancements in foundation and generative models. Instead of directly using or adapting these models to produce policies or low-level actions, we advocate for a generative scheme, which uses these models to automatically generate diversified tasks, scenes, and training supervisions, thereby scaling up robotic skill learning with minimal human supervision. Our approach equips a robotic agent with a self-guided propose-generate-learn cycle: the agent first proposes interesting tasks and skills to develop, and then generates corresponding simulation environments by populating pertinent objects and assets with proper spatial configurations. Afterwards, the agent decomposes the proposed high-level task into sub-tasks, selects the optimal learning approach (reinforcement learning, motion planning, or trajectory optimization), generates required training supervision, and then learns policies to acquire the proposed skill. Our work attempts to extract the extensive and versatile knowledge embedded in large-scale models and transfer them to the field of robotics. Our fully generative pipeline can be queried repeatedly, producing an endless stream of skill demonstrations associated with diverse tasks and environments.
+
+
+@article{wang2023robogen,
+  title={Robogen: Towards unleashing infinite data for automated robot learning via generative simulation},
+  author={Wang, Yufei and Xian, Zhou and Chen, Feng and Wang, Tsun-Hsuan and Wang, Yian and Fragkiadaki, Katerina and Erickson, Zackory and Held, David and Gan, Chuang},
+  journal={arXiv preprint arXiv:2311.01455},
+  year={2023}
+}
+----------------------------------------------------------------------
+MimicGen: A Data Generation System for Scalable Robot Learning using Human Demonstrations
+
+Imitation learning from a large set of human demonstrations has proved to be an effective paradigm for building capable robot agents. However, the demonstrations can be extremely costly and time-consuming to collect. We introduce MimicGen, a system for automatically synthesizing large-scale, rich datasets from only a small number of human demonstrations by adapting them to new contexts. We use MimicGen to generate over 50K demonstrations across 18 tasks with diverse scene configurations, object instances, and robot arms from just ~200 human demonstrations. We show that robot agents can be effectively trained on this generated dataset by imitation learning to achieve strong performance in long-horizon and high-precision tasks, such as multi-part assembly and coffee preparation, across broad initial state distributions. We further demonstrate that the effectiveness and utility of MimicGen data compare favorably to collecting additional human demonstrations, making it a powerful and economical approach towards scaling up robot learning. Datasets, simulation environments, videos, and more at this https URL .
+
+@article{mandlekar2023mimicgen,
+  title={Mimicgen: A data generation system for scalable robot learning using human demonstrations},
+  author={Mandlekar, Ajay and Nasiriany, Soroush and Wen, Bowen and Akinola, Iretiayo and Narang, Yashraj and Fan, Linxi and Zhu, Yuke and Fox, Dieter},
+  journal={arXiv preprint arXiv:2310.17596},
+  year={2023}
+}
+----------------------------------------------------------------------
+End-to-End Object Detection with Adaptive Clustering Transformer
+
+End-to-end Object Detection with Transformer (DETR)proposes to perform object detection with Transformer and achieve comparable performance with two-stage object detection like Faster-RCNN. However, DETR needs huge computational resources for training and inference due to the high-resolution spatial input. In this paper, a novel variant of transformer named Adaptive Clustering Transformer(ACT) has been proposed to reduce the computation cost for high-resolution input. ACT cluster the query features adaptively using Locality Sensitive Hashing (LSH) and ap-proximate the query-key interaction using the prototype-key interaction. ACT can reduce the quadratic O(N2) complexity inside self-attention into O(NK) where K is the number of prototypes in each layer. ACT can be a drop-in module replacing the original self-attention module without any training. ACT achieves a good balance between accuracy and computation cost (FLOPs). The code is available as supplementary for the ease of experiment replication and verification. Code is released at \url{this https URL}
+
+@article{zheng2020end,
+  title={End-to-end object detection with adaptive clustering transformer},
+  author={Zheng, Minghang and Gao, Peng and Zhang, Renrui and Li, Kunchang and Wang, Xiaogang and Li, Hongsheng and Dong, Hao},
+  journal={arXiv preprint arXiv:2011.09315},
+  year={2020}
+}
+
+----------------------------------------------------------------------
+
+我要写一篇论文综述，内容如上。不要用我们，作者只有一个人。不要用总之字样
