@@ -17,14 +17,15 @@ conda create -n ai_generate_article python=3.10
 
 conda activate ai_generate_article
 
+git clone https://github.com/yongyuan-chen/ai_generate_article.git
+
+cd ai_generate_article
+
 pip install -r requirements.txt
 ```
 
 # `运行`
 
-git clone 项目
-
-cd ai_generate_article
 
 cyy_util.py文件填写deepseek的key，去deepseek官网获取。我放了一个key有10元额度，用完就需要自己申请调用了。
 
