@@ -37,7 +37,12 @@ https://api-docs.deepseek.com/zh-cn/quick_start/pricing
 
 写提示词到input_prompt.json中
 
-执行python main.py，deepseek有点弱，有时候报错，多执行两次就有结果了
+![提示词撰写](./提示词撰写.png)
+
+执行python main.py，(deepseek有点弱，有时候报错，多执行两次就有结果了)
+
 生成的main.tex文件放进overleaf空白项目里面，https://cn.overleaf.com/ 新建空白项目
+
 点击左上角菜单，设置编译器版本为XeLaTex
+
 点击编译即可得到pdf版本论文

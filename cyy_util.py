@@ -206,49 +206,6 @@ def call_gpt_json(user,sys=None):
 
     return gpt_response2json(result)
 
-split_text_prompt='''请你仔细阅读传入的需求文档，依据文档中的大标题对其进行切分操作。这里的大标题是指以“1.”或者“1、”作为序号的标题，例如“1.库存管理”“1、库存管理”等。而小标题则是以“1.1”“1.1.1”等形式呈现的。在生成的结果中，我们将其存储在名为 sections 的数据结构里，需要特别注意的是，sections 中的第一个 section 必须从以“1.”或者“1、”为序号的大标题开始，要严格按照顺序输出每个 section。例如，如果文档中第一个大标题是“2.库存管理”，你需要跳过该部分，继续查找并从以“1.”或者“1、”开头的大标题开始，确保 sections 中第一个 section 是从序号 1 开始，然后按顺序依次输出后续的 section，注意要将文件完整切分，如果需求文档有5个大标题就分成5部分，4个大标题就分成四部分。请你严格按照上述规则进行操作，以保证需求文档的正确切分和 sections 的有序输出。
-例如将一个具有3个大标题的需求文档切分后的格式如下所示：
-{"sections":[
-{"section":"1.检查项目分类及检查类别详细信息",
-"content":"此界面用于维护检查项目分类\n检查项目分类取自检查类别字典EXAM_CLASS_DICT表中的本机构的非停用的分类，分类名称以树状结构展示，按照序号SERIAL_NO排序，可折叠，一般为三级分类\n该模块支持对检查项目分类的【新增】【停用】以及【刷新】\n各科室进入页面，只能在页面看到自己科室的分类，例如放射科进入页面，只能看到“放射"分类，超声科进入页面，只能看到“超声”分类（一级分类由系统预设，增加应用参数维护该工作站可见的检查项目一级分类，根据科室进行维护即可）\n\n1.1 新增\n1.1.1 功能详细说明\n新增顶级分类\n当鼠标未选中检查项目分类，直接点击【新增】按钮时，则为新增顶级分类\n【新增】按钮点击后，检查类别详细信息tab页显示如下图所示\n填写好信息后，点击页面底部【保存】按钮，调用项目分类新增接口\n\n\n点击图片可查看完整电子表格\n新增子级分类\n当鼠标选中检查项目分类，点击【新增】按钮时，则为新增子级分类\n【新增】按钮点击后，检查类别详细信息tab页显示如下图所示\n填写好信息后，点击页面底部【保存】按钮，调用项目分类新增接口\n\n\n点击图片可查看完整电子表格\n1.1.2 接口流程图\n\n1.1.3 数据流\n新增：检查类别字典EXAM_CLASS_DICT(clinic\exam\exam_class_dictionary)\n\n点击图片可查看完整电子表格\n新增：检查分类扩展表EXAM_CLASS_DICT_EXTEND(clinic\clinic_dictionary\exam\exam_class_dictionary_extension)\n\n点击图片可查看完整电子表格\n1.2 编辑\n1.2.1 功能详细说明\n该功能没有单独的【编辑】按钮，左侧鼠标选中任意分类，右侧检查类别详细信息tab页就显示该分类的信息，直接修改后点击【保存】按钮即为编辑\n编辑时的控件、布局、交互和新增时相同，不再贴图说明，唯一不同的是，“类别编码”不可编辑\n\n点击图片可查看完整电子表格\n1.2.2 接口流程图\n\n1.2.3 数据流\n修改：检查类别字典 EXAM_CLASS_DICT(clinic\exam\exam_class_dictionary)\n新增/删除/修改：检查分类扩展表EXAM_CLASS_DICT_EXTEND(clinic\clinic_dictionary\exam\exam_class_dictionary_extension)\n\n点击图片可查看完整电子表格\n1.3 停用\n1.3.1 功能详细说明\n鼠标单击选中选中某一检查项目分类，点击【停用】按钮，弹出确认弹窗，弹窗点击【确定】，调用停用接口，点击【取消】关闭弹窗\n\n1.3.2 接口流程图\n\n\n停用分类下所有检查项目，详见检查项目维护 \n1.3.3 数据流\n修改：检查类别字典 EXAM_CLASS_DICT(clinic\exam\exam_class_dictionary)\n\n点击图片可查看完整电子表格\n1.4 刷新\n1.4.1 功能详细说明\n点击【刷新】按钮，刷新左侧树状检查项目分类，页面回到初始状态\n"
-},
-{
-"section":"2.执行科室维护",
-"content":" \n此界面用于维护各级检查分类的执行科室\n\n2.1.1 功能详细说明\n整体交互：\n执行科室维护tab页分为左右两块区域，左侧为科室检索控件，右侧为显示已选科室区域\n鼠标选中某一分类后进入该tab页，左侧显示该分类使用院区的所有科室列表，右侧显示该分类已维护的执行科室\n勾选左侧科室点击【>>】按钮，科室来到已选科室列表，再点击【保存】按钮即为新增，左侧科室不能重复加入右侧\n勾选右侧已选科室点击【<<】按钮，科室从已选科室列表移除，再点击【保存】按钮即为删除\n右侧已选科室列表修改优先级再点击【保存】按钮即为编辑\n左右两侧的科室可以多选批量操作\n\n科室检索控件：\n数据源\n初始化查询\n默认按上述sql查询出所选分类的使用院区的科室\n检索条件\n\n点击图片可查看完整电子表格\n列表字段\n列表的科室名称按 “科室名称（院区名称）”拼接显示\n\n\n已选科室列表：\n数据源\n列表字段\n\n点击图片可查看完整电子表格\n2.1.2 数据流\n新增：\n新增：检查类别与执行科室对照表EXAM_VS_DEPT(clinic\clinic_dictionary\exam\exam_vs_department) \n\n点击图片可查看完整电子表格\n删除：\n删除科室时，删除表中该检查类别代码下该执行科室代码的数据\n删除：检查类别与执行科室对照表EXAM_VS_DEPT(clinic\clinic_dictionary\exam\exam_vs_department) \n编辑：\n修改：检查类别与执行科室对照表EXAM_VS_DEPT(clinic\clinic_dictionary\exam\exam_vs_department) \n"
-},
-{
-"section":"3.检查部位字典维护",
-"content":"此界面用于维护各检查一级分类的检查部位字典\n鼠标选中某一级分类后进入该tab页，显示该分类已维护的检查部位字典\n\n3.1 列表\n数据源\n列表字段\n\n点击图片可查看完整电子表格\n3.2 新增\n\n3.2.1 功能详细说明\n直接点击【新增】按钮，列表底部出现一行空白行，填写后点击【保存】，调用检查部位字典新增接口\n\n点击图片可查看完整电子表格\n3.2.2 接口流程图\n\n3.2.3 数据流\n新增： 检查部位字典EXAM_BODYS_DICT(clinic\clinic_dictionary\exam\exam_body_dictionary)\n\n点击图片可查看完整电子表格\n3.3 编辑\n\n3.3.1 功能详细说明\n鼠标单击选中一行后点击【编辑】按钮或者直接鼠标双击该行，都可进入编辑状态，填写后点击【保存】，调用检查部位字典编辑接口\n\n点击图片可查看完整电子表格\n3.3.2 数据流\n修改： 检查部位字典EXAM_BODYS_DICT(clinic\clinic_dictionary\exam\exam_body_dictionary)\n3.4 删除\n3.4.1 功能详细说明\n鼠标单击选中某一行，点击【删除】按钮，弹出确认弹窗，弹窗点击【确定】，调用删除接口，点击【取消】关闭弹窗\n删除未保存的前端缓存数据时，不需要弹窗提醒\n\n3.4.2 数据流\n删除： 检查部位字典EXAM_BODYS_DICT(clinic\clinic_dictionary\exam\exam_body_dictionary)\n"
-}
-]}
-'''
-split_text_prompt+='\n只需要给出json格式回答，其余任何多余的文字都不要输出.'
-
-def split_when_greater_1k(doc_contents):
-    global split_text_prompt
-    
-    short_doc_contents=[]
-    for doc in doc_contents:
-        if len(doc)<=1000:
-            short_doc_contents.append(doc)
-        else:
-           result=call_gpt_json(user=doc,sys=split_text_prompt)
-           for item in result['sections']:
-                short_doc_contents.append(item)
-    return short_doc_contents
-
-def split_single_doc_when_greater_1k(doc):
-    global split_text_prompt
-    
-    short_doc_contents=[]
-
-    if len(doc)<=1000:
-        short_doc_contents.append(doc)
-    else:
-        result=call_gpt_json(user=doc,sys=split_text_prompt)
-        for item in result['sections']:
-            short_doc_contents.append(item)
-    return short_doc_contents
 def save_to_json(doc_contents, output_file):#把一个数组或者对象或者字典或者字符串保存为json文件
     # 确保输出目录存在
     output_dir = os.path.dirname(output_file)
